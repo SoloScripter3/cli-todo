@@ -63,6 +63,25 @@ program
     }
   });
 
+//mark as done
+program
+  .command("done <index>")
+  .description("marks the task as completed")
+  .action((index) => {
+    const idx = parseInt(index, 10) - 1;
+    const todos = loadTodos();
+    if (idx >= 0 && idx < todos.length) {
+      for (let i = 0; i < todos.length; i++) {
+        if (i === idx) {
+          todos[i].done = true;
+        }
+        saveTodos(todos);
+      }
+    } else {
+      console.log("invalaid index");
+    }
+  });
+
 //display the tasks list
 program
   .command("show")
