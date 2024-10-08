@@ -36,4 +36,20 @@ program
     console.log(`The task is added successfully`);
   });
 
+//Remove command
+program
+  .command("remove <index>")
+  .description("marks the task as completed")
+  .action((index) => {
+    let idx = parseInt(index, 10) - 1;
+    const todos = loadTodos();
+    if (idx >= 0 && idx < todos.length) {
+      let removedTask = todos.splice(idx, 1);
+      saveTodos(todos);
+      console.log(`Removed ${removedTask[0].task}`);
+    } else {
+      console.log("invalid index");
+    }
+  });
+
 program.parse(process.argv);
