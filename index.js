@@ -82,6 +82,23 @@ program
     }
   });
 
+//updating the tasks
+program
+  .command("update <index> <str>")
+  .description("takes index and updated task")
+  .action((index, str) => {
+    const idx = parseInt(index, 10) - 1;
+    const todos = loadTodos();
+    for (let i = 0; i < todos.length; i++) {
+      if (idx >= 0 && idx < todos.length) {
+        if (i === idx) {
+          todos[i].task = str;
+        }
+      }
+    }
+    saveTodos(todos);
+  });
+
 //display the tasks list
 program
   .command("show")
