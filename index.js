@@ -24,6 +24,17 @@ const saveTodos = (todos) => {
   fs.writeFileSync(todosFile, JSON.stringify(todos, null, 2));
 };
 
+//display function
+const display = (todos) => {
+  todos.forEach((task) => {
+    if (task.done) {
+      console.log(`✔ ${task.task}`);
+    } else {
+      console.log(`✘ ${task.task}`);
+    }
+  });
+};
+
 program.version("1.0.0");
 
 program
@@ -50,6 +61,15 @@ program
     } else {
       console.log("invalid index");
     }
+  });
+
+//display the tasks list
+program
+  .command("show")
+  .description("shows all the tasks in the list")
+  .action(() => {
+    const todos = loadTodos();
+    display(todos);
   });
 
 program.parse(process.argv);
