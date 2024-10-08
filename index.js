@@ -19,6 +19,12 @@ const loadTodos = () => {
   }
 };
 
+//date module
+const timeStamp = () => {
+  let date = new Date();
+  return date.toLocaleString();
+};
+
 //saving the tasks into the json file
 const saveTodos = (todos) => {
   fs.writeFileSync(todosFile, JSON.stringify(todos, null, 2));
@@ -28,21 +34,22 @@ const saveTodos = (todos) => {
 const display = (todos) => {
   todos.forEach((task) => {
     if (task.done) {
-      console.log(`✔ ${task.task}`);
+      console.log(`✔ ${task.task} ⌛${task.timestamp}`);
     } else {
-      console.log(`✘ ${task.task}`);
+      console.log(`✘ ${task.task} ⌛${task.timestamp}`);
     }
   });
 };
 
 program.version("1.0.0");
 
+//adding tasks
 program
   .command("add <task>")
   .description("adds the task to the file")
   .action((task) => {
     const todos = loadTodos();
-    todos.push({ task, done: false });
+    todos.push({ task, done: false, timestamp: timeStamp() });
     saveTodos(todos);
     console.log(`The task is added successfully`);
   });
@@ -65,7 +72,7 @@ program
 
 //mark as done
 program
-  .command("done <index>")
+  .command("mark <index>")
   .description("marks the task as completed")
   .action((index) => {
     const idx = parseInt(index, 10) - 1;
@@ -76,6 +83,7 @@ program
           todos[i].done = true;
         }
         saveTodos(todos);
+        console.log("marked as done");
       }
     } else {
       console.log("invalaid index");
@@ -97,6 +105,7 @@ program
       }
     }
     saveTodos(todos);
+    console.log("updated successfully");
   });
 
 //display the tasks list
