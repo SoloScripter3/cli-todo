@@ -57,7 +57,7 @@ program
 //Remove command
 program
   .command("remove <index>")
-  .description("marks the task as completed")
+  .description("removes the task from list based on the index")
   .action((index) => {
     let idx = parseInt(index, 10) - 1;
     const todos = loadTodos();
