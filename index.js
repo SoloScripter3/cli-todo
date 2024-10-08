@@ -83,8 +83,8 @@ program
           todos[i].done = true;
         }
         saveTodos(todos);
-        console.log("marked as done");
       }
+      console.log("marked as done");
     } else {
       console.log("invalaid index");
     }
